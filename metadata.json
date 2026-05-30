@@ -1,0 +1,6 @@
+{
+  "name": "Help On Hire",
+  "description": "Premium on-demand staffing and trusted service hiring platform. Connects clients with verified professionals for home services, business solutions, and event support.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
