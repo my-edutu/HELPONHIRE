@@ -65,6 +65,7 @@ export interface ProApplicationInput {
   email: string;
   phone: string;
   city: string;
+  location: string;
   specialty: string;
   experienceYears: number;
   hourlyRate: number;

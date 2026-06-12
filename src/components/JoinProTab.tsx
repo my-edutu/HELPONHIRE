@@ -20,23 +20,33 @@ import { ProApplicationInput } from '../types';
 
 export const JoinProTab: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(1);
-  const [formData, setFormData] = useState<ProApplicationInput>({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    city: 'Port Harcourt',
-    specialty: 'Eco-Friendly Home Cleaning',
-    experienceYears: 2,
-    hourlyRate: 35,
-    bio: '',
-    hasLicense: false,
-    backgroundConcent: false
+  const [formData, setFormData] = useState<ProApplicationInput>(() => {
+    const saved = localStorage.getItem('hoh_pro_application_form');
+    return saved ? JSON.parse(saved) : {
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
+      city: 'Port Harcourt',
+      location: '',
+      specialty: 'Eco-Friendly Home Cleaning',
+      experienceYears: 2,
+      hourlyRate: 35,
+      bio: '',
+      hasLicense: false,
+      backgroundConcent: false
+    };
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [dragActive, setDragActive] = useState(false);
-  const [fileName, setFileName] = useState('');
+  const [idDragActive, setIdDragActive] = useState(false);
+  const [cvDragActive, setCvDragActive] = useState(false);
+  const [idFileName, setIdFileName] = useState('');
+  const [cvFileName, setCvFileName] = useState('');
+
+  React.useEffect(() => {
+    localStorage.setItem('hoh_pro_application_form', JSON.stringify(formData));
+  }, [formData]);
 
   const specialties = [
     { value: 'Eco-Friendly Home Cleaning', defaultRate: 35 },
@@ -56,41 +66,70 @@ export const JoinProTab: React.FC = () => {
     });
   };
 
-  const handleDrag = (e: React.DragEvent) => {
+  const handleIdDrag = (e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
     if (e.type === "dragenter" || e.type === "dragover") {
-      setDragActive(true);
+      setIdDragActive(true);
     } else if (e.type === "dragleave") {
-      setDragActive(false);
+      setIdDragActive(false);
     }
   };
 
-  const handleDrop = (e: React.DragEvent) => {
+  const handleIdDrop = (e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    setDragActive(false);
+    setIdDragActive(false);
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      setFileName(e.dataTransfer.files[0].name);
+      setIdFileName(e.dataTransfer.files[0].name);
     }
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCvDrag = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.type === "dragenter" || e.type === "dragover") {
+      setCvDragActive(true);
+    } else if (e.type === "dragleave") {
+      setCvDragActive(false);
+    }
+  };
+
+  const handleCvDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setCvDragActive(false);
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      setCvFileName(e.dataTransfer.files[0].name);
+    }
+  };
+
+  const handleIdFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setFileName(e.target.files[0].name);
+      setIdFileName(e.target.files[0].name);
+    }
+  };
+
+  const handleCvFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setCvFileName(e.target.files[0].name);
     }
   };
 
   const handleNextStep = () => {
     if (currentStep === 1) {
-      if (!formData.firstName || !formData.lastName || !formData.email || !formData.phone) {
-        alert('Please fill out all personal contact fields.');
+      if (!formData.firstName || !formData.lastName || !formData.email || !formData.phone || !formData.location) {
+        alert('Please fill out all personal contact and location fields.');
         return;
       }
     }
     if (currentStep === 2) {
       if (!formData.bio || formData.experienceYears <= 0) {
         alert('Please describe your professional background and specify years of training.');
+        return;
+      }
+      if (!idFileName || !cvFileName) {
+        alert('Please upload both your Government ID and your CV/Resume for vetting.');
         return;
       }
     }
@@ -112,6 +151,7 @@ export const JoinProTab: React.FC = () => {
     setTimeout(() => {
       setIsSubmitting(false);
       setSubmitted(true);
+      localStorage.removeItem('hoh_pro_application_form');
     }, 2500);
   };
 
@@ -329,6 +369,7 @@ export const JoinProTab: React.FC = () => {
                   onClick={() => {
                     setCurrentStep(1);
                     setSubmitted(false);
+                    localStorage.removeItem('hoh_pro_application_form');
                   }}
                   className="rounded-full border border-zinc-750 hover:bg-white/5 py-2.5 px-6 text-xs font-bold tracking-wider uppercase transition-colors"
                 >
@@ -351,7 +392,7 @@ export const JoinProTab: React.FC = () => {
                   <div className="space-y-6 animate-fade-in text-left">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                       <div>
-                        <label className="text-[10px] sm:text-[11px] font-bold text-zinc-300 uppercase tracking-wider block mb-2">First Name</label>
+                        <label className="text-[10px] sm:text-[11px] font-bold text-zinc-300 uppercase tracking-wider block mb-2">First Name *</label>
                         <input
                           type="text"
                           required
@@ -362,7 +403,7 @@ export const JoinProTab: React.FC = () => {
                         />
                       </div>
                       <div>
-                        <label className="text-[10px] sm:text-[11px] font-bold text-zinc-300 uppercase tracking-wider block mb-2">Last Name</label>
+                        <label className="text-[10px] sm:text-[11px] font-bold text-zinc-300 uppercase tracking-wider block mb-2">Last Name *</label>
                         <input
                           type="text"
                           required
@@ -374,28 +415,65 @@ export const JoinProTab: React.FC = () => {
                       </div>
                     </div>
 
-                    <div>
-                      <label className="text-[10px] sm:text-[11px] font-bold text-zinc-300 uppercase tracking-wider block mb-2">Email Address</label>
-                      <input
-                        type="email"
-                        required
-                        value={formData.email}
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        placeholder="john@example.com"
-                        className="w-full rounded-xl bg-transparent border border-zinc-800 text-white placeholder-zinc-600 px-4 py-3 text-xs focus:outline-none focus:ring-1 focus:ring-[#C1E929] focus:border-[#C1E929]"
-                      />
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                      <div>
+                        <label className="text-[10px] sm:text-[11px] font-bold text-zinc-300 uppercase tracking-wider block mb-2">Email Address *</label>
+                        <input
+                          type="email"
+                          required
+                          value={formData.email}
+                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                          placeholder="john@example.com"
+                          className="w-full rounded-xl bg-transparent border border-zinc-800 text-white placeholder-zinc-600 px-4 py-3 text-xs focus:outline-none focus:ring-1 focus:ring-[#C1E929] focus:border-[#C1E929]"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-[10px] sm:text-[11px] font-bold text-zinc-300 uppercase tracking-wider block mb-2">Phone Number *</label>
+                        <input
+                          type="tel"
+                          required
+                          value={formData.phone}
+                          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                          placeholder="+234 812 345 6789"
+                          className="w-full rounded-xl bg-transparent border border-zinc-800 text-white placeholder-zinc-600 px-4 py-3 text-xs focus:outline-none focus:ring-1 focus:ring-[#C1E929] focus:border-[#C1E929]"
+                        />
+                      </div>
                     </div>
 
-                    <div>
-                      <label className="text-[10px] sm:text-[11px] font-bold text-zinc-300 uppercase tracking-wider block mb-2">Phone Number</label>
-                      <input
-                        type="tel"
-                        required
-                        value={formData.phone}
-                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        placeholder="+1 (555) 000-0000"
-                        className="w-full rounded-xl bg-transparent border border-zinc-800 text-white placeholder-zinc-600 px-4 py-3 text-xs focus:outline-none focus:ring-1 focus:ring-[#C1E929] focus:border-[#C1E929]"
-                      />
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                      <div>
+                        <label className="text-[10px] sm:text-[11px] font-bold text-zinc-300 uppercase tracking-wider block mb-2">City</label>
+                        <input
+                          type="text"
+                          disabled
+                          value="Port Harcourt"
+                          className="w-full rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-500 px-4 py-3 text-xs cursor-not-allowed"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-[10px] sm:text-[11px] font-bold text-[#C1E929] uppercase tracking-wider block mb-2">Specific Neighborhood / Area *</label>
+                        <div className="relative">
+                          <select
+                            value={formData.location}
+                            onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                            required
+                            className="w-full rounded-xl bg-[#031513] border border-zinc-800 text-white px-4 py-3 text-xs focus:outline-none focus:ring-1 focus:ring-[#C1E929] focus:border-[#C1E929] appearance-none cursor-pointer"
+                          >
+                            <option value="">Select neighborhood...</option>
+                            <option value="GRA Phase I">GRA Phase I</option>
+                            <option value="GRA Phase II">GRA Phase II</option>
+                            <option value="Rumuola">Rumuola</option>
+                            <option value="D-Line">D-Line</option>
+                            <option value="Elelenwo">Elelenwo</option>
+                            <option value="Trans Amadi">Trans Amadi</option>
+                            <option value="Rumuokwuta">Rumuokwuta</option>
+                            <option value="Eliozu">Eliozu</option>
+                            <option value="Ada George">Ada George</option>
+                            <option value="Peter Odili Road">Peter Odili Road</option>
+                          </select>
+                          <ChevronDown className="h-4 w-4 absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 pointer-events-none" />
+                        </div>
+                      </div>
                     </div>
 
                     <div className="pt-6 border-t border-zinc-800 flex justify-end">
@@ -484,41 +562,84 @@ export const JoinProTab: React.FC = () => {
                       />
                     </div>
 
-                    {/* Simple drag input */}
-                    <div>
-                      <label className="text-[10px] sm:text-[11px] font-bold text-zinc-300 uppercase tracking-wider block mb-2">Resume / Certification Photo (Optional)</label>
-                      <div 
-                        onDragEnter={handleDrag}
-                        onDragOver={handleDrag}
-                        onDragLeave={handleDrag}
-                        onDrop={handleDrop}
-                        className={`border border-dashed rounded-xl p-6 text-center cursor-pointer transition ${
-                          dragActive 
-                            ? 'border-[#C1E929] bg-white/5' 
-                            : fileName 
-                            ? 'border-emerald-500 bg-white/5' 
-                            : 'border-zinc-800 hover:border-zinc-700 hover:bg-white/5'
-                        }`}
-                      >
-                        <input
-                          type="file"
-                          id="credentials-document-upload"
-                          onChange={handleFileChange}
-                          className="hidden"
-                        />
-                        <label htmlFor="credentials-document-upload" className="cursor-pointer block text-center">
-                          {fileName ? (
-                            <div className="space-y-1">
-                              <span className="text-xs font-semibold text-[#C1E929] block">✓ Selected: {fileName}</span>
-                              <span className="text-[10px] text-zinc-400 block">Click to change</span>
-                            </div>
-                          ) : (
-                            <div className="space-y-1">
-                              <span className="text-xs font-semibold text-zinc-200 block">Drag &amp; drop credentials photo</span>
-                              <span className="text-[10px] text-zinc-500 block">PDF or PNG up to 8MB</span>
-                            </div>
-                          )}
-                        </label>
+                    {/* Dual file uploads required for vetting */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                      {/* Government ID Upload */}
+                      <div>
+                        <label className="text-[10px] sm:text-[11px] font-bold text-zinc-300 uppercase tracking-wider block mb-2">Government Issued ID *</label>
+                        <div 
+                          onDragEnter={handleIdDrag}
+                          onDragOver={handleIdDrag}
+                          onDragLeave={handleIdDrag}
+                          onDrop={handleIdDrop}
+                          className={`border border-dashed rounded-xl p-5 text-center cursor-pointer transition ${
+                            idDragActive 
+                              ? 'border-[#C1E929] bg-white/5' 
+                              : idFileName 
+                              ? 'border-emerald-500 bg-white/5' 
+                              : 'border-zinc-800 hover:border-zinc-700 hover:bg-white/5'
+                          }`}
+                        >
+                          <input
+                            type="file"
+                            id="government-id-upload"
+                            onChange={handleIdFileChange}
+                            accept="image/*,.pdf"
+                            className="hidden"
+                          />
+                          <label htmlFor="government-id-upload" className="cursor-pointer block text-center">
+                            {idFileName ? (
+                              <div className="space-y-1">
+                                <span className="text-xs font-semibold text-[#C1E929] block">✓ Selected: {idFileName}</span>
+                                <span className="text-[10px] text-zinc-400 block">Click to change ID document</span>
+                              </div>
+                            ) : (
+                              <div className="space-y-1">
+                                <span className="text-xs font-semibold text-zinc-200 block">Drag &amp; drop Government ID</span>
+                                <span className="text-[10px] text-zinc-550 block">National ID card, Driver's License or Passport</span>
+                              </div>
+                            )}
+                          </label>
+                        </div>
+                      </div>
+
+                      {/* CV / Resume Upload */}
+                      <div>
+                        <label className="text-[10px] sm:text-[11px] font-bold text-zinc-300 uppercase tracking-wider block mb-2">Curriculum Vitae (CV) *</label>
+                        <div 
+                          onDragEnter={handleCvDrag}
+                          onDragOver={handleCvDrag}
+                          onDragLeave={handleCvDrag}
+                          onDrop={handleCvDrop}
+                          className={`border border-dashed rounded-xl p-5 text-center cursor-pointer transition ${
+                            cvDragActive 
+                              ? 'border-[#C1E929] bg-white/5' 
+                              : cvFileName 
+                              ? 'border-emerald-500 bg-white/5' 
+                              : 'border-zinc-800 hover:border-zinc-700 hover:bg-white/5'
+                          }`}
+                        >
+                          <input
+                            type="file"
+                            id="cv-resume-upload"
+                            onChange={handleCvFileChange}
+                            accept=".pdf,.doc,.docx"
+                            className="hidden"
+                          />
+                          <label htmlFor="cv-resume-upload" className="cursor-pointer block text-center">
+                            {cvFileName ? (
+                              <div className="space-y-1">
+                                <span className="text-xs font-semibold text-[#C1E929] block">✓ Selected: {cvFileName}</span>
+                                <span className="text-[10px] text-zinc-400 block">Click to change CV file</span>
+                              </div>
+                            ) : (
+                              <div className="space-y-1">
+                                <span className="text-xs font-semibold text-zinc-200 block">Drag &amp; drop CV / Resume</span>
+                                <span className="text-[10px] text-zinc-550 block">PDF or Word format (under 10MB)</span>
+                              </div>
+                            )}
+                          </label>
+                        </div>
                       </div>
                     </div>
 

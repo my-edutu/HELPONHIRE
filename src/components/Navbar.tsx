@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Briefcase, Menu, X, ArrowRight, ShieldCheck } from 'lucide-react';
+// @ts-ignore
+import logoImg from '../logo.jpg';
 
 interface NavbarProps {
   activeTab: string;
@@ -11,11 +13,11 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, onOpenB
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navItems = [
-    { id: 'find-pros', label: 'Home' },
     { id: 'services', label: 'Services' },
     { id: 'how-it-works', label: 'How It Works' },
     { id: 'business', label: 'For Businesses' },
     { id: 'join', label: 'Become a Professional' },
+    { id: 'about', label: 'About Us' },
     { id: 'contact', label: 'Contact' },
   ];
 
@@ -41,32 +43,21 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, onOpenB
           {/* Logo */}
           <div 
             onClick={() => setActiveTab('find-pros')} 
-            className="flex cursor-pointer items-center space-x-2.5 transition-opacity hover:opacity-90"
+            className="flex cursor-pointer items-center transition-opacity hover:opacity-90"
             id="nav-logo"
           >
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#0A201C] text-[#C1E929] shadow-md shadow-[#C1E929]/10">
-              <Briefcase className="h-5 w-5" />
-            </div>
-            <div>
-              <span className="text-lg font-extrabold tracking-tight text-[#0A201C]">
-                Help On <span className="text-emerald-700">Hire</span>
-              </span>
-              <div className="flex items-center space-x-1 text-[8px] font-extrabold uppercase tracking-wider text-emerald-600">
-                <ShieldCheck className="h-2.5 w-2.5" />
-                <span>100% Vetted Pros</span>
-              </div>
-            </div>
+            <img src={logoImg} alt="Help On Hire Logo" className="h-10 w-auto object-contain" />
           </div>
 
           {/* Desktop Navigation Links */}
-          <div className="hidden md:flex items-center space-x-1">
+          <div className="hidden lg:flex items-center space-x-0.5">
             {navItems.map((item) => {
               const isActive = activeTab === item.id || (item.id === 'how-it-works' && activeTab === 'find-pros' && typeof window !== 'undefined' && window.location.hash === '#how-it-works');
               return (
                 <button
                   key={item.id}
                   onClick={() => handleTabClick(item.id)}
-                  className={`relative px-4 py-2 text-xs font-bold uppercase tracking-wider transition-all duration-200 rounded-full ${
+                  className={`relative px-3 py-2 text-[10px] font-bold uppercase tracking-wider transition-all duration-200 rounded-full ${
                     isActive
                       ? 'text-[#0A201C] bg-[#EBF3F0]'
                       : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100/60'
@@ -92,7 +83,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, onOpenB
 
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="flex items-center justify-center rounded-lg p-2 text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900 md:hidden"
+              className="flex items-center justify-center rounded-lg p-2 text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900 lg:hidden"
               id="mobile-nav-toggle"
               aria-label="Toggle Navigation Menu"
             >
@@ -104,7 +95,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, onOpenB
 
       {/* Mobile Navigation Panel */}
       {mobileMenuOpen && (
-        <div className="border-t border-zinc-100 bg-white px-4 py-4 md:hidden shadow-lg animate-fade-in" id="mobile-menu-panel">
+        <div className="border-t border-zinc-100 bg-white px-4 py-4 lg:hidden shadow-lg animate-fade-in" id="mobile-menu-panel">
           <div className="flex flex-col space-y-2">
             {navItems.map((item) => {
               const isActive = activeTab === item.id;
@@ -131,7 +122,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, onOpenB
               className="mt-4 flex w-full items-center justify-center space-x-2 rounded-full bg-[#0A201C] py-3.5 text-center text-xs font-bold uppercase tracking-wider text-[#C1E929] shadow-md shadow-emerald-950/10"
               id="mobile-book-btn"
             >
-              <span>Instant Request</span>
+              <span>Request a Service</span>
               <ArrowRight className="h-4 w-4" />
             </button>
           </div>

@@ -23,9 +23,9 @@ export const BusinessTab: React.FC = () => {
   // Form States matching types
   const [formInput, setFormInput] = useState<CorporateRequestInput>({
     companyName: '',
-    contactName: 'GRA Client', // Auto-fill for compliance with CorporateRequestInput
-    email: 'client@company.bank', // Auto-fill
-    phone: '+234 80 0000 0000', // Auto-fill
+    contactName: '',
+    email: '',
+    phone: '',
     roleNeeded: 'Event Ushers & Support',
     headcount: 5,
     durationWeeks: 1,
@@ -37,7 +37,7 @@ export const BusinessTab: React.FC = () => {
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formInput.companyName || !formInput.description) {
+    if (!formInput.companyName || !formInput.contactName || !formInput.email || !formInput.description) {
       alert('Please fill out all required fields.');
       return;
     }
@@ -50,8 +50,8 @@ export const BusinessTab: React.FC = () => {
         setSubmitted(false);
         setFormInput({
           companyName: '',
-          contactName: 'GRA Client',
-          email: 'client@company.bank',
+          contactName: '',
+          email: '',
           phone: '+234 80 0000 0000',
           roleNeeded: 'Event Ushers & Support',
           headcount: 5,
@@ -445,16 +445,53 @@ export const BusinessTab: React.FC = () => {
               ) : (
                 <form onSubmit={handleFormSubmit} className="space-y-5" id="business-client-briefcase-form">
                   
-                  <div>
-                    <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider block mb-2">Company Name</label>
-                    <input 
-                      type="text" 
-                      required
-                      placeholder="Acme Corp" 
-                      value={formInput.companyName}
-                      onChange={(e) => setFormData('companyName', e.target.value)}
-                      className="w-full rounded-xl bg-zinc-50 border border-zinc-200 text-zinc-900 placeholder-zinc-400 px-4 py-3 text-xs focus:outline-none focus:ring-1 focus:ring-[#0A201C]"
-                    />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider block mb-2">Company / Organization Name *</label>
+                      <input 
+                        type="text" 
+                        required
+                        placeholder="e.g. Acme Corp" 
+                        value={formInput.companyName}
+                        onChange={(e) => setFormData('companyName', e.target.value)}
+                        className="w-full rounded-xl bg-zinc-50 border border-zinc-200 text-zinc-900 placeholder-zinc-400 px-4 py-3 text-xs focus:outline-none focus:ring-1 focus:ring-[#0A201C]"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider block mb-2">Contact Person Name *</label>
+                      <input 
+                        type="text" 
+                        required
+                        placeholder="e.g. John Okafor" 
+                        value={formInput.contactName}
+                        onChange={(e) => setFormData('contactName', e.target.value)}
+                        className="w-full rounded-xl bg-zinc-50 border border-zinc-200 text-zinc-900 placeholder-zinc-400 px-4 py-3 text-xs focus:outline-none focus:ring-1 focus:ring-[#0A201C]"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider block mb-2">Email Address *</label>
+                      <input 
+                        type="email" 
+                        required
+                        placeholder="contact@company.com" 
+                        value={formInput.email}
+                        onChange={(e) => setFormData('email', e.target.value)}
+                        className="w-full rounded-xl bg-zinc-50 border border-zinc-200 text-zinc-900 placeholder-zinc-400 px-4 py-3 text-xs focus:outline-none focus:ring-1 focus:ring-[#0A201C]"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider block mb-2">Phone Number</label>
+                      <input 
+                        type="tel" 
+                        placeholder="+234 812 345 6789" 
+                        value={formInput.phone}
+                        onChange={(e) => setFormData('phone', e.target.value)}
+                        className="w-full rounded-xl bg-zinc-50 border border-zinc-200 text-zinc-900 placeholder-zinc-400 px-4 py-3 text-xs focus:outline-none focus:ring-1 focus:ring-[#0A201C]"
+                      />
+                    </div>
                   </div>
 
                   <div>

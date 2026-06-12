@@ -68,7 +68,7 @@ export const ContactTab: React.FC = () => {
                 </span>
                 <div>
                   <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400">Hotline Phone Support</h4>
-                  <p className="text-[#0A201C] font-semibold mt-0.5">+234 (800) HELP-HIRE</p>
+                  <a href="tel:+2348001234567" className="text-[#0A201C] font-semibold mt-0.5 hover:text-emerald-700 transition block">+234 800 123 4567</a>
                   <p className="text-xs text-zinc-505">Mon–Sun, 24/7 client concierge support desk</p>
                 </div>
               </div>
@@ -79,7 +79,7 @@ export const ContactTab: React.FC = () => {
                 </span>
                 <div>
                   <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400">Email Correspondence</h4>
-                  <p className="text-[#0A201C] font-semibold mt-0.5">support@helponhire.test</p>
+                  <a href="mailto:support@helponhire.ng" className="text-[#0A201C] font-semibold mt-0.5 hover:text-emerald-700 transition block">support@helponhire.ng</a>
                   <p className="text-xs text-zinc-505">Average reply timeline: under 45 minutes</p>
                 </div>
               </div>
@@ -90,26 +90,48 @@ export const ContactTab: React.FC = () => {
                 </span>
                 <div>
                   <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400">WhatsApp Instant Connect</h4>
-                  <p className="text-emerald-600 font-semibold mt-0.5">Chat with us on WhatsApp</p>
+                  <a
+                    href="https://wa.me/2348001234567?text=Hello%20Help%20On%20Hire%2C%20I%20have%20an%20inquiry."
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-emerald-600 font-semibold mt-0.5 hover:text-emerald-800 transition block"
+                    id="contact-whatsapp-link"
+                  >
+                    Chat with us on WhatsApp →
+                  </a>
                   <p className="text-xs text-zinc-505">Direct routing to local operational dispatcher coordinators</p>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Map placeholder card styled in Cleano dark forest elements */}
-          <div className="bg-[#0A201C] rounded-3xl p-8 text-white relative overflow-hidden shadow-xl min-h-[220px] flex flex-col justify-between">
+          {/* Google Maps embed for Port Harcourt */}
+          <div className="rounded-3xl overflow-hidden border border-zinc-200 shadow-sm" style={{height: '220px'}}>
+            <iframe
+              title="Help On Hire Location - Port Harcourt"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126760.88591052757!2d6.9659929!3d4.8415838!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1069cd7d11b4a75b%3A0xba0c3a5b1e3fe8f!2sPort%20Harcourt%2C%20Rivers%20State%2C%20Nigeria!5e0!3m2!1sen!2sng!4v1700000000000!5m2!1sen!2sng"
+              width="100%"
+              height="220"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              id="google-maps-embed"
+            />
+          </div>
+
+          <div className="bg-[#0A201C] rounded-3xl p-6 text-white relative overflow-hidden shadow-xl flex flex-col justify-between">
             <div className="absolute inset-0 bg-[radial-gradient(#11322d_1px,transparent_1px)] bg-[size:1.5rem_1.5rem] opacity-35" />
             <div className="relative z-10">
-              <span className="text-[9px] font-bold uppercase tracking-widest text-[#C1E929]">Operational limits</span>
-              <h4 className="text-lg font-bold tracking-tight text-white mt-1">Sourcing trusted workforce</h4>
+              <span className="text-[9px] font-bold uppercase tracking-widest text-[#C1E929]">Service Coverage</span>
+              <h4 className="text-base font-bold tracking-tight text-white mt-1">Serving Port Harcourt & surroundings</h4>
               <p className="text-xs text-zinc-300 mt-2 leading-relaxed">
-                We are actively dispatching certified house cleaners, admin support specialists, bar staff, and IT diagnostics professionals across Port Harcourt and municipal neighborhoods.
+                We dispatch certified professionals across GRA Phase I & II, Rumuola, Elelenwo, D-Line, Rumuokwuta, and surrounding Port Harcourt municipalities.
               </p>
             </div>
             <div className="relative z-10 pt-4 flex items-center justify-between text-xs text-[#C1E929] border-t border-white/10 mt-4 leading-none">
               <span>● OPERATIONS LIVE</span>
-              <span>100% SECURED ROUTING</span>
+              <span>PORT HARCOURT, NIGERIA</span>
             </div>
           </div>
         </div>

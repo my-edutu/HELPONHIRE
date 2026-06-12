@@ -24,6 +24,8 @@ import {
 } from 'lucide-react';
 import { PROFESSIONALS, REVIEWS } from '../data';
 import { Professional } from '../types';
+import { TestimonialsColumn } from '../../components/ui/testimonials-columns-1';
+import { motion } from 'motion/react';
 
 interface FindProsTabProps {
   onOpenBooking: (serviceId?: string, proId?: string) => void;
@@ -95,131 +97,123 @@ export const FindProsTab: React.FC<FindProsTabProps> = ({ onOpenBooking, setActi
     <div className="flex flex-col bg-[#F9FBFB] text-zinc-900 font-sans" id="homepage-scaffold">
       
       {/* ========================================================= */}
-      {/* SECTION 01 — HERO (Dark Green Theme, Layout & Collage)     */}
+      {/* SECTION 01 — HERO (Dark Green Theme, 3-Col Sliding Layout) */}
       {/* ========================================================= */}
-      <section className="relative overflow-hidden bg-[#0A201C] text-white py-24 px-4 sm:px-6 lg:px-8" id="hero-section">
+      <section className="relative overflow-hidden bg-[#0A201C] text-white min-h-[620px]" id="hero-section">
         {/* Subtle decorative background grids */}
         <div className="absolute inset-0 bg-[radial-gradient(#11322d_1px,transparent_1px)] bg-[size:1.5rem_1.5rem] opacity-35" />
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-950/20 rounded-full blur-3xl filter -translate-y-12" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-emerald-900/20 rounded-full blur-3xl filter" />
 
-        <div className="relative mx-auto max-w-7xl">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            
-            {/* Left Column Content */}
-            <div className="lg:col-span-7 flex flex-col items-start z-10">
-              <span className="inline-flex items-center space-x-2 text-[#C1E929] font-extrabold uppercase tracking-widest text-[10px] mb-4 bg-emerald-900/30 px-3 py-1 rounded-full border border-emerald-500/20 leading-none">
-                <Sparkles className="h-3 w-3 animate-pulse" />
-                <span>TRUSTED PROFESSIONAL SERVICES</span>
-              </span>
+        {/* 3-column layout: images | text | images */}
+        <div className="relative flex items-center min-h-[620px]">
 
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white mb-6 leading-none">
-                Reliable Help,<br />
-                <span className="text-[#C1E929] italic font-serif">Exactly</span> When You Need It.
-              </h1>
-
-              <p className="max-w-xl text-sm sm:text-base text-zinc-350 leading-relaxed mb-8">
-                Access trusted professionals for errands, home services, event staffing, and business support — seamlessly and on your terms. We handle the vetting so you can focus on what matters.
-              </p>
-
-              <div className="flex flex-wrap gap-4">
-                <button
-                  onClick={() => onOpenBooking()}
-                  className="rounded-full bg-[#C1E929] hover:bg-white text-[#0A201C] px-8 py-4 text-xs font-bold uppercase tracking-widest transition duration-300 shadow-lg shadow-[#C1E929]/15 flex items-center space-x-2 border-2 border-transparent hover:border-[#0A201C]"
-                  id="hero-request-btn"
-                >
-                  <span>Request a Service</span>
-                  <ArrowRight className="h-4 w-4 text-[#0A201C]" />
-                </button>
-                <button
-                  onClick={() => setActiveTab('business')}
-                  className="rounded-full bg-transparent hover:bg-white/10 text-[#C1E929] border-2 border-[#C1E929]/30 hover:border-white px-8 py-4 text-xs font-bold uppercase tracking-widest transition duration-300"
-                  id="hero-hire-staff-btn"
-                >
-                  Hire Staff
-                </button>
-              </div>
-
-              {/* Trust Indicators */}
-              <div className="mt-12 flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-8 border-t border-white/15 pt-8 w-full max-w-lg text-xs text-zinc-400">
-                <div className="flex items-center space-x-2 font-bold uppercase tracking-wider text-white">
-                  <Star className="h-4.5 w-4.5 text-[#C1E929] fill-current" />
-                  <span>★ 4.9/5 Service Rating</span>
-                </div>
-                <div className="flex items-center space-x-2 font-bold uppercase tracking-wider text-white">
-                  <ShieldCheck className="h-4.5 w-4.5 text-[#C1E929]" />
-                  <span>✔ 100% Vetted Pros</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Column Grid Collage (representing Cleaner, Delivery assistant, Event usher, Administrative assistant, Business support personnel) */}
-            <div className="lg:col-span-5 relative mt-8 lg:mt-0">
-              <div className="grid grid-cols-2 gap-4">
-                
-                {/* Photo 1: Home Services Cleaner */}
-                <div className="space-y-4">
-                  <div className="rounded-2xl overflow-hidden border border-white/10 aspect-square relative group shadow-lg">
-                    <img 
-                      src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&q=80&w=300" 
-                      alt="Cleaner Specialist portrait" 
-                      className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
-                      referrerPolicy="no-referrer"
-                    />
-                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 p-3 flex flex-col justify-end text-white">
-                      <span className="text-[8px] uppercase tracking-wider text-[#C1E929] font-bold">Cleaner</span>
-                      <p className="text-[10px] font-bold">ECO-CLEANING SPECIALIST</p>
-                    </div>
-                  </div>
-
-                  {/* Photo 2: Delivery assistant / Errands */}
-                  <div className="rounded-2xl overflow-hidden border border-white/10 aspect-[3/4] relative group shadow-lg">
-                    <img 
-                      src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=300" 
-                      alt="Delivery assistant pro" 
-                      className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
-                      referrerPolicy="no-referrer"
-                    />
-                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 p-3 flex flex-col justify-end text-white">
-                      <span className="text-[8px] uppercase tracking-wider text-[#C1E929] font-bold">Errands</span>
-                      <p className="text-[10px] font-bold">DELIVERY COORDINATES</p>
-                    </div>
+          {/* === LEFT SLIDING COLUMN === */}
+          <div className="hidden lg:block w-[220px] xl:w-[260px] shrink-0 h-[620px] overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,black_15%,black_85%,transparent)]">
+            <motion.div
+              animate={{ translateY: "-50%" }}
+              transition={{ duration: 18, repeat: Infinity, ease: "linear", repeatType: "loop" }}
+              className="flex flex-col gap-4 pb-4"
+            >
+              {[
+                { src: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&q=80&w=400", role: "Cleaner", title: "ECO-CLEANING SPECIALIST" },
+                { src: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400", role: "Errands", title: "DELIVERY COORDINATOR" },
+                { src: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&q=80&w=400", role: "Repairs", title: "SMART HANDYMAN" },
+                { src: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&q=80&w=400", role: "Cleaner", title: "ECO-CLEANING SPECIALIST" },
+                { src: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400", role: "Errands", title: "DELIVERY COORDINATOR" },
+                { src: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&q=80&w=400", role: "Repairs", title: "SMART HANDYMAN" },
+              ].map((img, idx) => (
+                <div key={idx} className="rounded-2xl overflow-hidden border border-white/10 aspect-[3/4] relative shadow-lg shrink-0">
+                  <img src={img.src} alt={img.role} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent p-3 flex flex-col justify-end text-white">
+                    <span className="text-[8px] uppercase tracking-wider text-[#C1E929] font-bold">{img.role}</span>
+                    <p className="text-[10px] font-bold">{img.title}</p>
                   </div>
                 </div>
-
-                {/* Photo 3: Event usher / Staffing */}
-                <div className="space-y-4 pt-8">
-                  <div className="rounded-2xl overflow-hidden border border-white/10 aspect-[3/4] relative group shadow-lg">
-                    <img 
-                      src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=300" 
-                      alt="Event usher operations" 
-                      className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
-                      referrerPolicy="no-referrer"
-                    />
-                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 p-3 flex flex-col justify-end text-white">
-                      <span className="text-[8px] uppercase tracking-wider text-[#C1E929] font-bold">Events</span>
-                      <p className="text-[10px] font-bold">HOSPITALITY USHER</p>
-                    </div>
-                  </div>
-
-                  {/* Photo 4: Administrative Admin Support */}
-                  <div className="rounded-2xl overflow-hidden border border-white/10 aspect-square relative group shadow-lg">
-                    <img 
-                      src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=300" 
-                      alt="Administrative support assistant" 
-                      className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
-                      referrerPolicy="no-referrer"
-                    />
-                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 p-3 flex flex-col justify-end text-white">
-                      <span className="text-[8px] uppercase tracking-wider text-[#C1E929] font-bold">Office</span>
-                      <p className="text-[10px] font-bold">ADMIN EXECUTIVE</p>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
+              ))}
+            </motion.div>
           </div>
+
+          {/* === CENTER TEXT CONTENT === */}
+          <div className="flex-1 flex flex-col items-center justify-center text-center px-6 sm:px-10 py-20 z-10">
+            <span className="inline-flex items-center space-x-2 text-[#C1E929] font-extrabold uppercase tracking-widest text-[10px] mb-5 bg-emerald-900/30 px-3 py-1 rounded-full border border-emerald-500/20 leading-none">
+              <Sparkles className="h-3 w-3 animate-pulse" />
+              <span>TRUSTED PROFESSIONAL SERVICES</span>
+            </span>
+
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white mb-6 leading-tight max-w-2xl">
+              Reliable Help,<br />
+              <span className="text-[#C1E929] italic font-serif">Exactly</span> When You Need It.
+            </h1>
+
+            <p className="max-w-lg text-sm sm:text-base text-zinc-400 leading-relaxed mb-10">
+              Access trusted professionals for errands, home services, event staffing, and business support — seamlessly and on your terms.
+            </p>
+
+            <div className="flex flex-wrap justify-center gap-4 mb-10">
+              <button
+                onClick={() => onOpenBooking()}
+                className="rounded-full bg-[#C1E929] hover:bg-white text-[#0A201C] px-8 py-4 text-xs font-bold uppercase tracking-widest transition duration-300 shadow-lg shadow-[#C1E929]/15 flex items-center space-x-2 border-2 border-transparent hover:border-[#0A201C]"
+                id="hero-request-btn"
+              >
+                <span>Request a Service</span>
+                <ArrowRight className="h-4 w-4 text-[#0A201C]" />
+              </button>
+              <a
+                href="https://wa.me/2348001234567?text=Hello%20Help%20On%20Hire%2C%20I%20would%20like%20to%20enquire%20about%20your%20services."
+                target="_blank"
+                rel="noreferrer"
+                className="rounded-full bg-transparent hover:bg-white/10 text-[#C1E929] border-2 border-[#C1E929]/30 hover:border-white px-8 py-4 text-xs font-bold uppercase tracking-widest transition duration-300 flex items-center space-x-2"
+                id="hero-whatsapp-btn"
+              >
+                <svg className="h-4 w-4 fill-current text-[#C1E929]" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.458 5.705 1.459h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                </svg>
+                <span>Chat on WhatsApp</span>
+              </a>
+            </div>
+
+            {/* Trust Indicators */}
+            <div className="flex flex-col sm:flex-row items-center gap-6 border-t border-white/15 pt-8 text-xs text-zinc-400">
+              <div className="flex items-center space-x-2 font-bold uppercase tracking-wider text-white">
+                <Star className="h-4 w-4 text-[#C1E929] fill-current" />
+                <span>4.9/5 Service Rating</span>
+              </div>
+              <div className="hidden sm:block w-px h-4 bg-white/20" />
+              <div className="flex items-center space-x-2 font-bold uppercase tracking-wider text-white">
+                <ShieldCheck className="h-4 w-4 text-[#C1E929]" />
+                <span>100% Vetted Pros</span>
+              </div>
+            </div>
+          </div>
+
+          {/* === RIGHT SLIDING COLUMN === */}
+          <div className="hidden lg:block w-[220px] xl:w-[260px] shrink-0 h-[620px] overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,black_15%,black_85%,transparent)]">
+            <div className="pt-12">
+              <motion.div
+                animate={{ translateY: ["-50%", "0%"] }}
+                transition={{ duration: 22, repeat: Infinity, ease: "linear", repeatType: "loop" }}
+                className="flex flex-col gap-4 pb-4"
+              >
+                {[
+                  { src: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=400", role: "Events", title: "HOSPITALITY USHER" },
+                  { src: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400", role: "Office", title: "ADMIN EXECUTIVE" },
+                  { src: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=400", role: "Corporate", title: "BUSINESS ASSISTANT" },
+                  { src: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=400", role: "Events", title: "HOSPITALITY USHER" },
+                  { src: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400", role: "Office", title: "ADMIN EXECUTIVE" },
+                  { src: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=400", role: "Corporate", title: "BUSINESS ASSISTANT" },
+                ].map((img, idx) => (
+                  <div key={idx} className="rounded-2xl overflow-hidden border border-white/10 aspect-[3/4] relative shadow-lg shrink-0">
+                    <img src={img.src} alt={img.role} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent p-3 flex flex-col justify-end text-white">
+                      <span className="text-[8px] uppercase tracking-wider text-[#C1E929] font-bold">{img.role}</span>
+                      <p className="text-[10px] font-bold">{img.title}</p>
+                    </div>
+                  </div>
+                ))}
+              </motion.div>
+            </div>
+          </div>
+
         </div>
       </section>
 
@@ -677,64 +671,103 @@ export const FindProsTab: React.FC<FindProsTabProps> = ({ onOpenBooking, setActi
       {/* ========================================================= */}
       {/* SECTION 08 — TESTIMONIALS                                  */}
       {/* ========================================================= */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-zinc-50 border-b border-zinc-200" id="testimonials-section">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className="py-24 bg-zinc-50 border-b border-zinc-200 relative overflow-hidden" id="testimonials-section">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <span className="text-[10px] uppercase font-bold tracking-widest text-[#0A201C]/65 mb-4 block">
-            CLIENT CORRESPONDENCE
-          </span>
-          <h2 className="text-3xl font-extrabold text-[#0A201C] tracking-tight mb-4">
-            What Our Clients Say
-          </h2>
-          <p className="text-xs text-zinc-500 mb-12">
-            Trusted by individuals and businesses who value reliability.
-          </p>
-
-          {/* Testimonial Cards Slider representation */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
-            
-            {/* Review 1 */}
-            <div className="bg-white border border-zinc-200/80 rounded-3xl p-6 shadow-sm relative flex flex-col justify-between">
-              <span className="p-2 bg-emerald-50 text-[#0A201C] rounded-lg w-fit mb-4">
-                <Quote className="h-5.5 w-5.5 fill-current" />
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            viewport={{ once: true }}
+            className="flex flex-col items-center justify-center max-w-[540px] mx-auto text-center mb-12"
+          >
+            <div className="flex justify-center mb-4">
+              <span className="text-[10px] uppercase font-bold tracking-widest text-[#0A201C] bg-[#5E7E10]/10 px-3 py-1 rounded-full border border-[#5E7E10]/20">
+                Client Correspondence
               </span>
-              <p className="text-xs text-zinc-650 leading-relaxed italic">
-                "Help On Hire made everything so easy. The process was smooth and professional."
-              </p>
-              <div className="mt-6 border-t border-zinc-100 pt-4 flex items-center justify-between text-[11px]">
-                <span className="font-bold text-[#0A201C]">— Client</span>
-                <span className="text-zinc-400 font-semibold tracking-wider uppercase text-[9px] bg-zinc-100 px-2 py-0.5 rounded">Port Harcourt</span>
-              </div>
             </div>
 
-            {/* Review 2 */}
-            <div className="bg-white border border-zinc-200/80 rounded-3xl p-6 shadow-sm relative flex flex-col justify-between">
-              <span className="p-2 bg-emerald-50 text-[#0A201C] rounded-lg w-fit mb-4">
-                <Quote className="h-5.5 w-5.5 fill-current" />
-              </span>
-              <p className="text-xs text-zinc-650 leading-relaxed italic">
-                "I needed reliable support on short notice and they delivered."
-              </p>
-              <div className="mt-6 border-t border-zinc-100 pt-4 flex items-center justify-between text-[11px]">
-                <span className="font-bold text-[#0A201C]">— Event Client</span>
-                <span className="text-zinc-400 font-semibold tracking-wider uppercase text-[9px] bg-zinc-100 px-2 py-0.5 rounded">Port Harcourt</span>
-              </div>
-            </div>
+            <h2 className="text-3xl font-extrabold tracking-tight text-[#0A201C]">
+              What Our Users Say
+            </h2>
+            <p className="text-xs text-zinc-500 mt-3">
+              See what our customers have to say about our vetted professionals and service delivery.
+            </p>
+          </motion.div>
 
-            {/* Review 3 */}
-            <div className="bg-white border border-zinc-200/80 rounded-3xl p-6 shadow-sm relative flex flex-col justify-between">
-              <span className="p-2 bg-emerald-50 text-[#0A201C] rounded-lg w-fit mb-4">
-                <Quote className="h-5.5 w-5.5 fill-current" />
-              </span>
-              <p className="text-xs text-zinc-650 leading-relaxed italic">
-                "The follow-up and structure stood out immediately."
-              </p>
-              <div className="mt-6 border-t border-zinc-100 pt-4 flex items-center justify-between text-[11px]">
-                <span className="font-bold text-[#0A201C]">— Business Client</span>
-                <span className="text-zinc-400 font-semibold tracking-wider uppercase text-[9px] bg-zinc-100 px-2 py-0.5 rounded">Corporate GRA</span>
-              </div>
-            </div>
-
+          {/* Testimonials Columns container with fade out masks */}
+          <div className="flex justify-center gap-6 mt-10 [mask-image:linear-gradient(to_bottom,transparent,black_15%,black_85%,transparent)] max-h-[580px] overflow-hidden">
+            <TestimonialsColumn 
+              testimonials={[
+                {
+                  text: "This platform revolutionized our operations, streamlining home service dispatching and temporary event staffing. The vetted specialists keep us productive, even on short notice.",
+                  image: "https://randomuser.me/api/portraits/women/1.jpg",
+                  name: "Briana Patton",
+                  role: "Operations Manager",
+                },
+                {
+                  text: "Implementing Help On Hire was smooth and quick. The pre-screened professionals made team training and onboarding effortless.",
+                  image: "https://randomuser.me/api/portraits/men/2.jpg",
+                  name: "Bilal Ahmed",
+                  role: "IT Manager",
+                },
+                {
+                  text: "The support desk is exceptional, guiding us through match selection and providing fast, friendly dispatch assistance.",
+                  image: "https://randomuser.me/api/portraits/women/3.jpg",
+                  name: "Saman Malik",
+                  role: "Customer Support Lead",
+                }
+              ]} 
+              duration={15} 
+            />
+            <TestimonialsColumn 
+              testimonials={[
+                {
+                  text: "Help On Hire's seamless integration enhanced our office administration and corporate operations. Highly recommend their vetted specialists.",
+                  image: "https://randomuser.me/api/portraits/men/4.jpg",
+                  name: "Omar Raza",
+                  role: "CEO",
+                },
+                {
+                  text: "Its robust vetted network and quick support have transformed our workflow, making home cleaning and repairs effortless.",
+                  image: "https://randomuser.me/api/portraits/women/5.jpg",
+                  name: "Zainab Hussain",
+                  role: "Project Manager",
+                },
+                {
+                  text: "The smooth dispatch exceeded expectations. It streamlined our event ushers team, improving overall guest feedback.",
+                  image: "https://randomuser.me/api/portraits/women/6.jpg",
+                  name: "Aliza Khan",
+                  role: "Business Analyst",
+                }
+              ]} 
+              className="hidden md:block" 
+              duration={19} 
+            />
+            <TestimonialsColumn 
+              testimonials={[
+                {
+                  text: "Our business functions improved significantly with their temporary admin staff and welcoming corporate support team.",
+                  image: "https://randomuser.me/api/portraits/men/7.jpg",
+                  name: "Farhan Siddiqui",
+                  role: "Marketing Director",
+                },
+                {
+                  text: "They delivered a staffing solution that exceeded expectations, understanding our Port Harcourt operations perfectly.",
+                  image: "https://randomuser.me/api/portraits/women/8.jpg",
+                  name: "Sana Sheikh",
+                  role: "Sales Manager",
+                },
+                {
+                  text: "Using Help On Hire, our on-demand cleaning and handyman repairs significantly improved, boosting overall home comfort.",
+                  image: "https://randomuser.me/api/portraits/men/9.jpg",
+                  name: "Hassan Ali",
+                  role: "E-commerce Manager",
+                }
+              ]} 
+              className="hidden lg:block" 
+              duration={17} 
+            />
           </div>
 
         </div>
@@ -760,15 +793,15 @@ export const FindProsTab: React.FC<FindProsTabProps> = ({ onOpenBooking, setActi
             >
               Request a Service
             </button>
-            <button
-              onClick={() => {
-                const el = document.getElementById('whatsapp-trigger-btn');
-                if (el) el.click();
-              }}
+            <a
+              href="https://wa.me/2348001234567?text=Hello%20Help%20On%20Hire%2C%20I%20need%20reliable%20help%20today."
+              target="_blank"
+              rel="noreferrer"
               className="rounded-full bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-3.5 text-xs font-bold uppercase tracking-widest transition flex items-center space-x-2"
+              id="cta-whatsapp-btn"
             >
               <span>Chat on WhatsApp</span>
-            </button>
+            </a>
           </div>
         </div>
       </section>
